@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Todo from "./Todo";
 import RemoveTodo from "../containers/RemoveTodo";
+import EditTodo from "../containers/EditTodo";
 
 const TodoList = ({ todos, onTodoClick }) => (
   <ul>
@@ -15,6 +16,7 @@ const TodoList = ({ todos, onTodoClick }) => (
           />
         </label>
         <Todo key={todo.id} {...todo} />
+        <EditTodo id={todo.id} text={todo.text}/>
         <RemoveTodo id={todo.id} />
       </li>
     ))}
