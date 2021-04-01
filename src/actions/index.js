@@ -11,7 +11,7 @@ export const editTodo = (id, text) => {
   return {
     type: "EDIT_TODO",
     id,
-    text
+    text,
   };
 };
 

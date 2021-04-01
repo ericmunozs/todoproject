@@ -2,34 +2,61 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { editTodo } from "../actions";
 
+// Styles
+import Fab from "@material-ui/core/Fab";
+import IconButton from "@material-ui/core/IconButton";
+import EditIcon from "@material-ui/icons/Edit";
+import SaveIcon from "@material-ui/icons/Save";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+
+const useStyles = makeStyles(() => ({
+  form: {
+    display: "flex",
+    alignItems: "center",
+  },
+}));
+
 let EditTodo = ({ id, text, dispatch }) => {
-  let input;
+  const classes = useStyles();
 
   const [isEditing, setIsEditing] = useState(false);
 
   return (
     <div>
-      {!isEditing && <span onClick={() => setIsEditing(true)}>Edit</span>}
+      {!isEditing && (
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => setIsEditing(true)}
+        >
+          <EditIcon />
+        </IconButton>
+      )}
       {isEditing && (
         <form
+          className={classes.form}
+          noValidate
+          autoComplete="off"
           onSubmit={(e) => {
             e.preventDefault();
-            if (!input.value.trim()) {
+            const materialInput = document.getElementById("editButton");
+            if (!materialInput.value.trim()) {
               return;
             }
-            dispatch(editTodo(id, input.value));
-            input.value = "";
+            dispatch(editTodo(id, materialInput.value));
+            materialInput.value = "";
             setIsEditing(false);
           }}
         >
-          <label>Nuevo nombre</label>
-          <input
-            ref={(node) => {
-              input = node;
-            }}
+          <TextField
+            id="editButton"
+            label="Editar tarea"
             defaultValue={text || ""}
           />
-          <button type="submit">Editar</button>
+          <Fab size="small" color="primary" aria-label="save" type="submit">
+            <SaveIcon />
+          </Fab>
         </form>
       )}
     </div>
