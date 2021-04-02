@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { addTodo } from "../actions";
 
 // Styles
@@ -19,8 +19,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getUniqueTodoId = (todos) => {
+  if (todos.length === 0) return 0;
+
+  return todos[todos.length - 1].id + 1;
+};
+
 let AddTodo = ({ dispatch }) => {
   const classes = useStyles();
+  const todos = useSelector((state) => state.todos);
 
   return (
     <form
@@ -33,7 +40,8 @@ let AddTodo = ({ dispatch }) => {
         if (!materialInput.value.trim()) {
           return;
         }
-        dispatch(addTodo(materialInput.value));
+        const uniqueId = getUniqueTodoId(todos);
+        dispatch(addTodo(uniqueId, materialInput.value));
         materialInput.value = "";
       }}
     >
