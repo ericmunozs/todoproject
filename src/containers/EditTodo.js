@@ -23,7 +23,7 @@ let EditTodo = ({ id, text, dispatch }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <div>
+    <>
       {!isEditing && (
         <IconButton
           aria-label="edit"
@@ -59,7 +59,7 @@ let EditTodo = ({ id, text, dispatch }) => {
           </Fab>
         </form>
       )}
-    </div>
+    </>
   );
 };
 EditTodo = connect()(EditTodo);
