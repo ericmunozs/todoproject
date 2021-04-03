@@ -24,16 +24,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TodoList = ({ todos, onTodoClick }) => {
+const TodoList = ({ todos }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <List component="nav" aria-label="main mailbox folders">
+      <List component="nav">
         {todos.map((todo) => (
           <React.Fragment key={todo.id}>
             <ListItem className={classes.listItem}>
-              <Todo key={todo.id} onTodoClick={onTodoClick} {...todo} />
+              <Todo {...todo} />
               <div className={classes.buttons}>
                 <EditTodo id={todo.id} text={todo.text} />
                 <RemoveTodo id={todo.id} />
@@ -55,7 +55,6 @@ TodoList.propTypes = {
       text: PropTypes.string.isRequired,
     }).isRequired
   ).isRequired,
-  onTodoClick: PropTypes.func.isRequired,
 };
 
 export default TodoList;

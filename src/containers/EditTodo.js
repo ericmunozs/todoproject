@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import { editTodo } from "../actions";
+import React, { useState, useContext } from "react";
+import PropTypes from "prop-types";
+import { TodoContext } from "../app/Provider";
 
 // Styles
 import Fab from "@material-ui/core/Fab";
@@ -17,10 +17,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-let EditTodo = ({ id, text, dispatch }) => {
+let EditTodo = ({ id, text }) => {
   const classes = useStyles();
 
   const [isEditing, setIsEditing] = useState(false);
+
+  const { editTodo } = useContext(TodoContext);
 
   return (
     <>
@@ -44,8 +46,7 @@ let EditTodo = ({ id, text, dispatch }) => {
             if (!materialInput.value.trim()) {
               return;
             }
-            dispatch(editTodo(id, materialInput.value));
-            materialInput.value = "";
+            editTodo(id, materialInput.value);
             setIsEditing(false);
           }}
         >
@@ -62,6 +63,10 @@ let EditTodo = ({ id, text, dispatch }) => {
     </>
   );
 };
-EditTodo = connect()(EditTodo);
+
+EditTodo.propTypes = {
+  id: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
+};
 
 export default EditTodo;

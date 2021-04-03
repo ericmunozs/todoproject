@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { TodoContext } from "../app/Provider";
 
 // Styles
 import { withStyles } from "@material-ui/core/styles";
@@ -18,24 +19,29 @@ const GreenCheckbox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
-const Todo = ({ completed, text, onTodoClick, id }) => (
-  <FormControlLabel
-    control={
-      <GreenCheckbox onChange={() => onTodoClick(id)} checked={completed} />
-    }
-    label={
-      <Typography
-        style={{ textDecoration: completed ? "line-through" : "none" }}
-      >
-        {text}
-      </Typography>
-    }
-  />
-);
+const Todo = ({ completed, text, id }) => {
+  const { toggleTodo } = React.useContext(TodoContext);
+
+  return (
+    <FormControlLabel
+      control={
+        <GreenCheckbox onChange={() => toggleTodo(id)} checked={completed} />
+      }
+      label={
+        <Typography
+          style={{ textDecoration: completed ? "line-through" : "none" }}
+        >
+          {text}
+        </Typography>
+      }
+    />
+  );
+};
 
 Todo.propTypes = {
   completed: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired
 };
 
 export default Todo;

@@ -1,6 +1,5 @@
 import React from "react";
-import { connect, useSelector } from "react-redux";
-import { addTodo } from "../actions";
+import { TodoContext } from "../app/Provider";
 
 // Styles
 import Fab from "@material-ui/core/Fab";
@@ -25,9 +24,10 @@ const getUniqueTodoId = (todos) => {
   return todos[todos.length - 1].id + 1;
 };
 
-let AddTodo = ({ dispatch }) => {
+const AddTodo = () => {
   const classes = useStyles();
-  const todos = useSelector((state) => state.todos);
+
+  const { todos, addTodo } = React.useContext(TodoContext);
 
   return (
     <form
@@ -41,7 +41,7 @@ let AddTodo = ({ dispatch }) => {
           return;
         }
         const uniqueId = getUniqueTodoId(todos);
-        dispatch(addTodo(uniqueId, materialInput.value));
+        addTodo(uniqueId, materialInput.value);
         materialInput.value = "";
       }}
     >
@@ -52,6 +52,5 @@ let AddTodo = ({ dispatch }) => {
     </form>
   );
 };
-AddTodo = connect()(AddTodo);
 
 export default AddTodo;

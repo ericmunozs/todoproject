@@ -1,8 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { TodoContext } from "../app/Provider";
 
-const Link = ({ active, children, onClick }) => {
-  if (active) {
+const isActive = (filter, visibilityFilter) => filter === visibilityFilter;
+
+const Link = ({ children, filter }) => {
+  const { visibilityFilter, setVisibilityFilter } = React.useContext(
+    TodoContext
+  );
+
+  if (isActive(filter, visibilityFilter)) {
     return <span>{children}</span>;
   }
 
@@ -11,7 +18,7 @@ const Link = ({ active, children, onClick }) => {
       href="/#"
       onClick={(e) => {
         e.preventDefault();
-        onClick();
+        setVisibilityFilter(filter);
       }}
     >
       {children}
@@ -20,9 +27,8 @@ const Link = ({ active, children, onClick }) => {
 };
 
 Link.propTypes = {
-  active: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
 };
 
 export default Link;
