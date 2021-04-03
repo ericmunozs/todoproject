@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   form: {
     "& > div": {
       margin: theme.spacing(1),
-      width: "25ch",
+      width: "512px",
     },
     display: "flex",
     alignItems: "center",
